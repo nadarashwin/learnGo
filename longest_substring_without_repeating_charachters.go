@@ -11,39 +11,32 @@ package main
 
 import (
 	"fmt"
-	"strings"
 )
 
 func main() {
-	d := lengthOfLongestSubstring("abccbde")
+	d := lengthOfLongestSubstring("dvdf")
 	fmt.Printf("the max of the string is %d\n", d)
 
 }
 
 func lengthOfLongestSubstring(s string) int {
-	dummYHash := make(map[string]int)
-	var dummyString string
-	for _, element := range s {
-		if strings.Contains(dummyString, string(element)) {
-			dummYHash[dummyString] = len(dummyString)
-			dummyString = string(element)
-		} else {
-			dummyString = dummyString + string(element)
+	dummyHash := make(map[string]int)
+	maxLength, startPoint := 0, 0
+	for index, element := range s {
+		// Logic to check for duplicate
+		if value, ok := dummyHash[string(element)]; ok {
+			duplicatePoint := value + 1 // for a duplicate, start the index from the duplicate position + 1
+			if duplicatePoint > startPoint {
+				startPoint = duplicatePoint
+			}
 		}
-		dummYHash[dummyString] = len(dummyString)
-
-	}
-	fmt.Printf("%s and %v\n", dummyString, dummYHash)
-
-	return getMax(dummYHash)
-}
-
-func getMax(a map[string]int) int {
-	var max int
-	for _, value := range a {
-		if max < value {
-			max = value
+		// Logic to check for max length
+		tempLength := index - startPoint + 1 // index starts from 0 and length starts from 1, hence + 1
+		if tempLength > maxLength {
+			maxLength = tempLength
 		}
+		dummyHash[string(element)] = index
 	}
-	return max
+	fmt.Printf("%v %d %d\n", dummyHash, maxLength, startPoint)
+	return maxLength
 }

@@ -20,6 +20,7 @@ func main() {
 	fmt.Println("*****------*******")
 	a := []int{2, 7, 11, 15}
 
+	// Double iteration
 	for i := 0; i < len(a); i++ {
 		for j := i + 1; j < len(a); j++ {
 			//fmt.Println(a[i], a[j])
@@ -29,12 +30,10 @@ func main() {
 		}
 	}
 
-	fmt.Printf("the length of slice a is %d\n", len(a))
-
 	fmt.Println("*****------*******")
 
+	// Single iteration and then using hash for lookup
 	hashTable := make(map[int]int)
-
 	for index, element := range a {
 		tempVariable := 9 - element
 		if value, ok := hashTable[tempVariable]; ok {
